@@ -22,6 +22,8 @@ int main(int argc, const char *argv[])
 
     /* INIT VARIABLES AND DATA STRUCTURES */
 
+    string detectorType = argv[1];
+    string descriptorType = argv[2];
     // data location
     string dataPath = "../";
 
@@ -78,11 +80,13 @@ int main(int argc, const char *argv[])
 
         // extract 2D keypoints from current image
         vector<cv::KeyPoint> keypoints; // create empty feature list for current image
-        string detectorType = "SHITOMASI";
+        
 
         //// STUDENT ASSIGNMENT
         //// TASK MP.2 -> add the following keypoint detectors in file matching2D.cpp and enable string-based selection based on detectorType
         //// -> HARRIS, FAST, BRISK, ORB, AKAZE, SIFT
+
+        double t = (double)cv::getTickCount();
 
         if (detectorType.compare("SHITOMASI") == 0)
         {
@@ -90,12 +94,23 @@ int main(int argc, const char *argv[])
         }
         else if (detectorType.compare("HARRIS") == 0)
         {
-            detKeypointsShiTomasi(keypoints, imgGray, false);
+            // std::cout << "###########Here#########" << std::endl;
+            detKeypointsHarris(keypoints, imgGray, false);
         }
-        else
+        else if (detectorType.compare("FAST")  == 0 || detectorType.compare("BRISK") == 0 ||
+            detectorType.compare("ORB")   == 0 || detectorType.compare("AKAZE") == 0 || detectorType.compare("SIFT")  == 0)
         {
             detKeypointsModern(keypoints, imgGray, detectorType, false);
         }
+
+        else {
+            std::cout << "Invalid detector argument" << std::endl;
+            exit(1);
+        }
+
+        t = ((double)cv::getTickCount() - t)/(cv::getTickFrequency());
+
+        cout << "Kpts calculation time: "  << 1000 * t / 1.0 << std::endl;
         //// EOF STUDENT ASSIGNMENT
 
         //// STUDENT ASSIGNMENT
@@ -114,6 +129,8 @@ int main(int argc, const char *argv[])
                 }
             }
         }
+
+        std::cout << "For Descriptor type: " << detectorType << ", Number of Keypoints on preceding vehicle n = " << keypoints.size() << std::endl;
 
         //// EOF STUDENT ASSIGNMENT
 
@@ -141,8 +158,7 @@ int main(int argc, const char *argv[])
         //// TASK MP.4 -> add the following descriptors in file matching2D.cpp and enable string-based selection based on descriptorType
         //// -> BRIEF, ORB, FREAK, AKAZE, SIFT
 
-        cv::Mat descriptors;
-        string descriptorType = "BRISK"; // BRIEF, ORB, FREAK, AKAZE, SIFT
+        cv::Mat descriptors; // BRIEF, ORB, FREAK, AKAZE, SIFT
         descKeypoints((dataBuffer.end() - 1)->keypoints, (dataBuffer.end() - 1)->cameraImg, descriptors, descriptorType);
         //// EOF STUDENT ASSIGNMENT
 
