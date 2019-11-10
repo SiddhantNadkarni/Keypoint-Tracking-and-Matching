@@ -157,11 +157,35 @@ void detKeypointsHarris(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, bool
         for (int j = 0; j < dst_norm.cols; ++j)
         {
             int response = (int)dst_norm.at<float>(i, j);
-            cv::KeyPoint numKeyPoint;
-            numKeyPoint.pt = cv::Point(j, i);
-            numKeyPoint.size = 2* apertureSize;
-            numKeyPoint.response = response;
-            keypoints.push_back(numKeyPoint);
+            if(response > minReponse)
+            {
+                cv::KeyPoint numKeyPoint;
+                numKeyPoint.pt = cv::Point(j, i);
+                numKeyPoint.size = 2* apertureSize;
+                numKeyPoint.response = response;
+
+                bool bOverlap = false;
+
+                for (auto it = keypoints.begin(); it!= keypoints.end(); ++it)
+                {
+                    double kptOverlap = cv::KeyPoint::overlap(numKeyPoint, *it);
+                    if(kptOverlap > maxOverlap)
+                    {
+                        bOverlap = true;
+                        if(numKeyPoint.response > it->response)
+                        {
+                            *it = numKeyPoint;
+                            break;
+                        }
+                        
+                    }
+                }
+
+                if(!bOverlap)
+                {
+                    keypoints.push_back(numKeyPoint);
+                }
+            }
         }
     }
 
