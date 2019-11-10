@@ -1,0 +1,8 @@
+!images
+!images/*
+!src
+!src/*
+!README.md
+!LICENSE
+!CMakeLists.txt
+
