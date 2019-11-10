@@ -3,6 +3,7 @@
 #include <sstream>
 #include <iomanip>
 #include <vector>
+#include <deque>
 #include <cmath>
 #include <limits>
 #include <opencv2/core.hpp>
@@ -17,13 +18,12 @@
 
 using namespace std;
 
+/* MAIN PROGRAM */
 int main(int argc, const char *argv[])
 {
 
     /* INIT VARIABLES AND DATA STRUCTURES */
 
-    string detectorType = argv[1];
-    string descriptorType = argv[2];
     // data location
     string dataPath = "../";
 
@@ -56,37 +56,40 @@ int main(int argc, const char *argv[])
         img = cv::imread(imgFullFilename);
         cv::cvtColor(img, imgGray, cv::COLOR_BGR2GRAY);
 
+        //// STUDENT ASSIGNMENT
+        //// TASK MP.1 -> replace the following code with ring buffer of size dataBufferSize
+        
 
-        // push image into data frame buffer
         DataFrame frame;
         frame.cameraImg = imgGray;
         dataBuffer.push_back(frame);
-
-        //// STUDENT ASSIGNMENT
-        //// TASK MP.1 -> replace the following code with ring buffer of size dataBufferSize
-        if(dataBuffer.size() > dataBufferSize)
+       if(dataBuffer.size() > dataBufferSize)
         {
             dataBuffer.erase(dataBuffer.begin());
         }
 
-
-        
-    
-
         //// EOF STUDENT ASSIGNMENT
-        cout << "#1 : LOAD IMAGE INTO BUFFER done" << endl;
+        // cout << "#1 : LOAD IMAGE INTO BUFFER done" << endl;
 
         /* DETECT IMAGE KEYPOINTS */
 
         // extract 2D keypoints from current image
-        vector<cv::KeyPoint> keypoints; // create empty feature list for current image
-        
+        vector<cv::KeyPoint> keypoints;
+
+        string detectorType = "SHITOMASI";
+        // string detectorType = "HARRIS";
+        // string detectorType = "FAST";
+        // string detectorType = "BRISK";
+        // string detectorType = "ORB";
+        // string detectorType = "AKAZE";
+        // string detectorType = "SIFT";
 
         //// STUDENT ASSIGNMENT
         //// TASK MP.2 -> add the following keypoint detectors in file matching2D.cpp and enable string-based selection based on detectorType
         //// -> HARRIS, FAST, BRISK, ORB, AKAZE, SIFT
 
         double t = (double)cv::getTickCount();
+
 
         if (detectorType.compare("SHITOMASI") == 0)
         {
@@ -108,7 +111,10 @@ int main(int argc, const char *argv[])
             exit(1);
         }
 
-        t = ((double)cv::getTickCount() - t)/(cv::getTickFrequency());
+        t = ((double)cv::getTickCount() - t) / cv::getTickFrequency();
+        //// EOF STUDENT ASSIGNMENT
+
+        // t = ((double)cv::getTickCount() - t)/(cv::getTickFrequency());
 
         cout << "Kpts calculation time: "  << 1000 * t / 1.0 << std::endl;
         //// EOF STUDENT ASSIGNMENT
@@ -135,7 +141,7 @@ int main(int argc, const char *argv[])
         //// EOF STUDENT ASSIGNMENT
 
         // optional : limit number of keypoints (helpful for debugging and learning)
-        bool bLimitKpts = true;
+        bool bLimitKpts = false;
         if (bLimitKpts)
         {
             int maxKeypoints = 50;
@@ -150,9 +156,15 @@ int main(int argc, const char *argv[])
 
         // push keypoints and descriptor for current frame to end of data buffer
         (dataBuffer.end() - 1)->keypoints = keypoints;
-        cout << "#2 : DETECT KEYPOINTS done" << endl;
+        // cout << "#2 : DETECT KEYPOINTS done" << endl;
 
         /* EXTRACT KEYPOINT DESCRIPTORS */
+        string descriptorType = "BRISK";
+        // string descriptorType = "BRIEF";
+        // string descriptorType = "ORB";
+        // string descriptorType = "FREAK";
+        // string descriptorType = "AKAZE";  // Fails with all non-AKAZE detectors
+        // string descriptorType = "SIFT";  // Fails with ORB detectors
 
         //// STUDENT ASSIGNMENT
         //// TASK MP.4 -> add the following descriptors in file matching2D.cpp and enable string-based selection based on descriptorType
@@ -165,7 +177,7 @@ int main(int argc, const char *argv[])
         // push descriptors for current frame to end of data buffer
         (dataBuffer.end() - 1)->descriptors = descriptors;
 
-        cout << "#3 : EXTRACT DESCRIPTORS done" << endl;
+        // cout << "#3 : EXTRACT DESCRIPTORS done" << endl;
 
         if (dataBuffer.size() > 1) // wait until at least two images have been processed
         {
@@ -173,24 +185,38 @@ int main(int argc, const char *argv[])
             /* MATCH KEYPOINT DESCRIPTORS */
 
             vector<cv::DMatch> matches;
-            string matcherType = "MAT_BF";        // MAT_BF, MAT_FLANN
-            string descriptorType = "DES_BINARY"; // DES_BINARY, DES_HOG
-            string selectorType = "SEL_NN";       // SEL_NN, SEL_KNN
+            string descriptorCategory;
+            string matcherType = "MAT_BF";
+            string selectorType = "SEL_KNN";
+
+            if (descriptorType.compare("SIFT") == 0) {
+                descriptorCategory = "DES_HOG";
+            }
+            else {
+                descriptorCategory = "DES_BINARY";
+            }     
 
             //// STUDENT ASSIGNMENT
             //// TASK MP.5 -> add FLANN matching in file matching2D.cpp
             //// TASK MP.6 -> add KNN match selection and perform descriptor distance ratio filtering with t=0.8 in file matching2D.cpp
 
+            double t_d = (double)cv::getTickCount();
             matchDescriptors((dataBuffer.end() - 2)->keypoints, (dataBuffer.end() - 1)->keypoints,
                              (dataBuffer.end() - 2)->descriptors, (dataBuffer.end() - 1)->descriptors,
                              matches, descriptorType, matcherType, selectorType);
 
             //// EOF STUDENT ASSIGNMENT
+            t_d = ((double)cv::getTickCount() - t_d)/(cv::getTickFrequency());
 
+            cout << detectorType << ", " << descriptorType << ", " << matches.size() << ", " << 1000 * t / 1.0 << ", " << 1000 * t_d / 1.0 << ", " << (1000 * t / 1.0) + (1000 * t_d / 1.0) << endl;
+
+            // std::cout << "Time to find matches: " << t_d*1000/1.0 << " ms" << std::endl;
+            // std::cout << "Total time: " << (t_d + t)*1000/1.0 << " ms" << std::endl;
+            // std::cout << "Number of matching keypoints for: " << descriptorType << ", is : " << matches.size() << std::endl;
             // store matches in current data frame
             (dataBuffer.end() - 1)->kptMatches = matches;
 
-            cout << "#4 : MATCH KEYPOINT DESCRIPTORS done" << endl;
+            // cout << "#4 : MATCH KEYPOINT DESCRIPTORS done" << endl;
 
             // visualize matches between current and previous image
             bVis = true;
