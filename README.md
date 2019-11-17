@@ -13,32 +13,11 @@ This mid-term project consists of four parts:
 * In the last part, test the various algorithms using all permutations and combinations of detector - descriptor in different combinations and compare performance measures. 
 
 
-## Data Description
+## Performance analysis - Data Description
 
 ### Generate descriptive statistics that summarize the central tendency, dispersion and  shape of a dataset’s distribution, excluding NaN values.
 
 
-```python
-dataSet.describe()
-```
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -112,12 +91,7 @@ dataSet.describe()
 
 
 
-### Max Num of KeyPoints Detected
-
-
-```python
-dataSet.iloc[dataSet['Num of matched keypoints'].idxmax()]
-```
+Max Num of KeyPoints Detected
 
 
 
@@ -132,12 +106,7 @@ dataSet.iloc[dataSet['Num of matched keypoints'].idxmax()]
 
 
 
-### Least total runtime for KeyPoints detection and matching
-
-
-```python
-dataSet.iloc[dataSet['Total time (ms)'].idxmin()]
-```
+Least total runtime for KeyPoints detection and matching
 
 
 
@@ -152,12 +121,7 @@ dataSet.iloc[dataSet['Total time (ms)'].idxmin()]
 
 
 
-### Min Num of KeyPoints Detected
-
-
-```python
-dataSet.iloc[dataSet['Num of matched keypoints'].idxmin()]
-```
+Min Num of KeyPoints Detected
 
 
 
@@ -172,12 +136,7 @@ dataSet.iloc[dataSet['Num of matched keypoints'].idxmin()]
 
 
 
-### Longest total runtime for KeyPoints detection and matching
-
-
-```python
-dataSet.iloc[dataSet['Total time (ms)'].idxmax()]
-```
+Longest total runtime for KeyPoints detection and matching
 
 
 
@@ -194,14 +153,7 @@ dataSet.iloc[dataSet['Total time (ms)'].idxmax()]
 
 ##  Analysis:
 
-### As can be seen from the above, the best detector - descriptor for keypoint calculation and matching is FAST detector and BRIEF descriptor based on both the most num of keypoints detector as well as least time for descriptor matching.
-
-
-```python
-dataSet['Num of matched keypoints'].hist()
-```
-
-
+As can be seen from the above, the best detector - descriptor for keypoint calculation and matching is FAST detector and BRIEF descriptor based on both the most num of keypoints detector as well as least time for descriptor matching.
 
 
     <matplotlib.axes._subplots.AxesSubplot at 0x12626eb00>
@@ -211,11 +163,6 @@ dataSet['Num of matched keypoints'].hist()
 
 ![png](output_15_1.png)
 
-
-
-```python
-dataSet['Total time (ms)'].hist()
-```
 
 
 
