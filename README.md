@@ -56,7 +56,7 @@ Task MP.7:
 * The final results are stored in excel sheets named Task_7.xlsx.
 * The data analysis is performed in Task_7_Data_Analysis notebook.
 
-### Data Description
+Data Description:
 
 Generate descriptive statistics that summarize the central tendency, dispersion and  shape of a dataset’s distribution, excluding NaN values.
 
@@ -139,12 +139,12 @@ Min Num of KeyPoints Detected
 
 
 
-##  Analysis:
+Analysis:
 
 As can be seen from the above, the best detector for keypoint calculation is FAST detector  based on both the most num of keypoints detected and worst is HARRIS which computes the lowest num of Keypoints.
 
 
-![png](output_11_1.png)
+![Screen Shot 2019-11-17 at 11 50 52 AM](https://user-images.githubusercontent.com/19183728/69014340-21540c00-093e-11ea-941e-51d46c08e60c.png)
 
 Task MP.8 and MP.9:
 
@@ -153,7 +153,7 @@ Task MP.8 and MP.9:
 * The final results are stored in excel sheets named Task_8_and_9.xlsx.
 * The data analysis is performed in Task_8_and_9_Analysis notebook.
 
-## Performance analysis - Data Description
+Performance analysis - Data Description:
 
 Generate descriptive statistics that summarize the central tendency, dispersion and  shape of a dataset’s distribution, excluding NaN values.
 
@@ -291,7 +291,7 @@ Longest total runtime for KeyPoints detection and matching
 
 
 
-##  Analysis:
+Analysis:
 
 As can be seen from the above, the best detector - descriptor for keypoint calculation and matching is FAST detector and BRIEF descriptor based on both the most num of keypoints detector as well as least time for descriptor matching.
 
