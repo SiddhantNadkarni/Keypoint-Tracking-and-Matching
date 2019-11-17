@@ -22,8 +22,8 @@ using namespace std;
 /* MAIN PROGRAM */
 int main(int argc, const char *argv[])
 {
-    std::vector<std::string> detectors_vec{"SHITOMASI"};
-    std::vector<std::string> descriptors_vec{"SIFT"};
+    std::vector<std::string> detectors_vec{"SIFT"};
+    std::vector<std::string> descriptors_vec{"BRISK", "BRIEF", "FREAK", "SIFT"};
     /* INIT VARIABLES AND DATA STRUCTURES */
     std::fstream fout;
     fout.open("../src/results.csv", ios::out | ios::app); 
