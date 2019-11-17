@@ -23,7 +23,7 @@ using namespace std;
 int main(int argc, const char *argv[])
 {
     std::vector<std::string> detectors_vec{"SHITOMASI"};
-    std::vector<std::string> descriptors_vec{"BRISK", "ORB"};
+    std::vector<std::string> descriptors_vec{"SIFT"};
     /* INIT VARIABLES AND DATA STRUCTURES */
     std::fstream fout;
     fout.open("../src/results.csv", ios::out | ios::app); 
