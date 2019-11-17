@@ -15,7 +15,7 @@ This mid-term project consists of four parts:
 
 ## Performance analysis - Data Description
 
-### Generate descriptive statistics that summarize the central tendency, dispersion and  shape of a dataset’s distribution, excluding NaN values.
+Generate descriptive statistics that summarize the central tendency, dispersion and  shape of a dataset’s distribution, excluding NaN values.
 
 
 <table border="1" class="dataframe">
@@ -155,24 +155,16 @@ Longest total runtime for KeyPoints detection and matching
 
 As can be seen from the above, the best detector - descriptor for keypoint calculation and matching is FAST detector and BRIEF descriptor based on both the most num of keypoints detector as well as least time for descriptor matching.
 
+Num Keypoint matched - Histogram
 
-    <matplotlib.axes._subplots.AxesSubplot at 0x12626eb00>
-
-
-
-
-![png](output_15_1.png)
+![Screen Shot 2019-11-17 at 11 50 41 AM](https://user-images.githubusercontent.com/19183728/69013043-9ddfee00-0930-11ea-94d9-0e0e8b98dfdd.png)
 
 
 
+Total time (ms) - Histogram 
 
+![Screen Shot 2019-11-17 at 11 50 52 AM](https://user-images.githubusercontent.com/19183728/69013053-b18b5480-0930-11ea-8c84-0f45ff27abcb.png)
 
-    <matplotlib.axes._subplots.AxesSubplot at 0x1263f85f8>
-
-
-
-
-![png](output_16_1.png)
 
 
 
