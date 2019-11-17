@@ -86,12 +86,6 @@ int main(int argc, const char *argv[])
                 vector<cv::KeyPoint> keypoints;
 
                 string detectorType = each_detector;
-                // string detectorType = "HARRIS";
-                // string detectorType = "FAST";
-                // string detectorType = "BRISK";
-                // string detectorType = "ORB";
-                // string detectorType = "AKAZE";
-                // string detectorType = "SIFT";
 
                 //// STUDENT ASSIGNMENT
                 //// TASK MP.2 -> add the following keypoint detectors in file matching2D.cpp and enable string-based selection based on detectorType
@@ -121,11 +115,6 @@ int main(int argc, const char *argv[])
                 }
 
                 t = ((double)cv::getTickCount() - t) / cv::getTickFrequency();
-                //// EOF STUDENT ASSIGNMENT
-
-                // t = ((double)cv::getTickCount() - t)/(cv::getTickFrequency());
-
-                cout << "Kpts calculation time: "  << 1000 * t / 1.0 << std::endl;
                 //// EOF STUDENT ASSIGNMENT
 
                 //// STUDENT ASSIGNMENT
@@ -169,11 +158,6 @@ int main(int argc, const char *argv[])
 
                 /* EXTRACT KEYPOINT DESCRIPTORS */
                 string descriptorType = each_descriptor;
-                // string descriptorType = "BRIEF";
-                // string descriptorType = "ORB";
-                // string descriptorType = "FREAK";
-                // string descriptorType = "AKAZE";  // Fails with all non-AKAZE detectors
-                // string descriptorType = "SIFT";  // Fails with ORB detectors
 
                 //// STUDENT ASSIGNMENT
                 //// TASK MP.4 -> add the following descriptors in file matching2D.cpp and enable string-based selection based on descriptorType
