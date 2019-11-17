@@ -180,7 +180,9 @@ int main(int argc, const char *argv[])
                     vector<cv::DMatch> matches;
                     string descriptorCategory;
                     string matcherType = "MAT_BF";
+                    // string matcherType = "MAT_FLANN";
                     string selectorType = "SEL_KNN";
+                    // string selectorType = "SEL_NN";
 
                     if (descriptorType.compare("SIFT") == 0) {
                         descriptorCategory = "DES_HOG";
