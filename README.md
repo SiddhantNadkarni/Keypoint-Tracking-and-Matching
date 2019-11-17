@@ -2,7 +2,7 @@
 
 <img src="images/keypoints.png" width="820" height="248" />
 
-https://github.com/SiddhantNadkarni/Keypoint-Tracking-and-Matching/blob/master/images/KeyPointGIF.mov
+<img src = "https://github.com/SiddhantNadkarni/Keypoint-Tracking-and-Matching/blob/master/images/SS.png" width = "820" height = "248"/>
 
 This is a midterm project in the second section - "Camera" of Udacity's Sensor Fusion nanodegree. The overall goal of the "Camera" course is to build a collision detection system. As preparation for this, a feature tracking between two consecutive 2D camera images from the "KITTI" dataset is done. Various detector / descriptor combinations are tested to see which one is able to detect and match more keypoints in the least time. 
 
