@@ -13,6 +13,146 @@ This mid-term project consists of four parts:
 * In the last part, test the various algorithms using all permutations and combinations of detector - descriptor in different combinations and compare performance measures. 
 
 
+Task MP.1:
+* In this task, I used a ```std::vector``` as a buffer. As soon as the buffer exceeded the specified size, I erased the first (oldest) image in the buffer. The complexity of this operation is O(n). We can instead use std::deque to improve insertion and deletion complexity to O(1). However, I went ahead with std::vector because in our case the data buffer size is only 2.
+```
+dataBuffer.push_back(frame);
+if(dataBuffer.size() > dataBufferSize)
+{
+    dataBuffer.erase(dataBuffer.begin());
+}
+```
+
+Task MP.2 and Task MP.4:
+* In this task, I used two ```std::vector<std::string>``` to store the detector and descriptor types as strings. 
+* Used OpenCV to implement various detector types such as Shi-Tomasi, Harris, FAST, BRIEF, BRISK, ORB, AKAZE, and SIFT. A detector type of selected by the string entered in the ```std::vector<std::string> detectors_vec``` string-vector.
+* Used OpenCV to implement various descriptor types such as BRIEF, BRISK, FREAK, ORB, AKAZE, and SIFT. A descriptor type of selected by the string entered in the ```std::vector<std::string> descriptors_vec``` string-vector.
+
+```
+std::vector<std::string> detectors_vec{"SIFT"};
+std::vector<std::string> descriptors_vec{"BRISK", "BRIEF", "FREAK", "SIFT"};
+```
+
+Task MP.3:
+* A bounding box (rectangle) is created using ``` cv::Rect ``` data structure from OpenCV around cars which are directly infront in the same lane. 
+* All keypoints outside this box are erased.
+* In this project, the bounding box co-ordinates are assumed. However in the next project, a bounding box will be created using Deep Learning (YOLO - Conv Neural Net).
+
+Task MP.5:
+* Keypoints are detected and their descriptors are calculated between two successive camera images. The next task is to match these keypoints and to decrease the false positives by selecting the correct matches. The function ```matchDescriptors``` takes in a ``` stringmatcherType``` which can be a ```"MAT_BF"``` i.e. Brute Force matching between descriptors in both the images by using the Hamming distance as a measure of similarity. 
+* The Hamming distance computes the difference between both vectors by using an XOR function, which returns zero if two bits are identical and one if two bits are different. This is better and faster than other types such as sum of absolute differences (L1 Norm) or sum of squared difference (L2 Norm). * Brute force matching works well for small keypoint numbers but can be computationally expensive as the number of keypoints increases. Thus to improve on this, we use a FLANN matcher ```string matcherType = "MAT_FLANN"``` which uses KD-Tree data structure to search for matching pairs and avoid the exhaustive search of the brute force approach. *
+Both BFMatching and FLANN accept a descriptor distance threshold T which is used to limit the number of matches to the good ones and discard matches where the respective pairs are no correspondences. 
+* The next step is the reject or minimize the number of false positives by using a ```string selectorType``` which can be set to ```"SEL_NN"``` (nearest neighbour search) or ```"SEL_KNN"``` (K nearest neighbour search). 
+
+Task MP.6:
+* In this task I compute a nearest neighbor distance ratio for each keypoint which is a very efficient way of lowering the number of false positives.
+* The main idea is to not apply the threshold on the SSD directly. Instead, for each keypoint in the source image, the two best matches are located in the reference image and the ratio between the descriptor distances is computed. Then, a threshold is applied to the ratio to sort out ambiguous matches.
+* By computing the SSD ratio between best and second-best match, weak candidates can be filtered out.
+* I have used a threshold of 0.8
+
+
+Task MP.7:
+* In this I ran all the detectors on all the images and analysed the performance of each detector in terms number of Keypoints detected.
+* The final results are stored in excel sheets named Task_7.xlsx.
+* The data analysis is performed in Task_7_Data_Analysis notebook.
+
+### Data Description
+
+Generate descriptive statistics that summarize the central tendency, dispersion and  shape of a dataset’s distribution, excluding NaN values.
+
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Image Number</th>
+      <th>Num of Keypoints</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>70.00000</td>
+      <td>70.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>4.50000</td>
+      <td>177.285714</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>2.89302</td>
+      <td>117.853648</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>0.00000</td>
+      <td>14.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>2.00000</td>
+      <td>113.250000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>4.50000</td>
+      <td>135.500000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>7.00000</td>
+      <td>257.750000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>9.00000</td>
+      <td>427.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+Max Num of KeyPoints Detected
+
+
+
+    Image Number            1
+    Keypoint Detector    FAST
+    Num of Keypoints      427
+    Name: 31, dtype: object
+
+
+
+Min Num of KeyPoints Detected
+
+
+
+
+    Image Number              1
+    Keypoint Detector    HARRIS
+    Num of Keypoints         14
+    Name: 11, dtype: object
+
+
+
+##  Analysis:
+
+As can be seen from the above, the best detector for keypoint calculation is FAST detector  based on both the most num of keypoints detected and worst is HARRIS which computes the lowest num of Keypoints.
+
+
+![png](output_11_1.png)
+
+Task MP.8 and MP.9:
+
+* In these two tasks, I ran all permutation-combination of detector and descriptor types. I used two ```std::vector<std::string>``` to store the detector and descriptor types as strings. I then looped over all detectors and descriptors and wrote the number of keypoints detected as well as total time (ms) for keypoint detection and matching in a csv file called results.csv which can be found in src folder.
+* However, not all detector type were compatible with the descriptor types. Thus, I had to do restrict to only a single detector at a time with the specific descriptor types it was compatible with.
+* The final results are stored in excel sheets named Task_8_and_9.xlsx.
+* The data analysis is performed in Task_8_and_9_Analysis notebook.
+
 ## Performance analysis - Data Description
 
 Generate descriptive statistics that summarize the central tendency, dispersion and  shape of a dataset’s distribution, excluding NaN values.
