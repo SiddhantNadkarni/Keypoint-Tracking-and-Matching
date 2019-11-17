@@ -53,8 +53,8 @@ Task MP.6:
 
 Task MP.7:
 * In this I ran all the detectors on all the images and analysed the performance of each detector in terms number of Keypoints detected.
-* The final results are stored in excel sheets named Task_7.xlsx.
-* The data analysis is performed in Task_7_Data_Analysis notebook.
+* The final results are stored in excel sheets named [Task_7.xlsx](https://github.com/SiddhantNadkarni/Keypoint-Tracking-and-Matching/blob/master/Excel%20Sheets/Task_7.xlsx).
+* The data analysis is performed in [Task_7_Data_Analysis](https://github.com/SiddhantNadkarni/Keypoint-Tracking-and-Matching/blob/master/Excel%20Sheets/iPython%20Notebooks/Task_7_Data_Analysis.ipynb) notebook.
 
 Data Description:
 
@@ -148,10 +148,10 @@ As can be seen from the above, the best detector for keypoint calculation is FAS
 
 Task MP.8 and MP.9:
 
-* In these two tasks, I ran all permutation-combination of detector and descriptor types. I used two ```std::vector<std::string>``` to store the detector and descriptor types as strings. I then looped over all detectors and descriptors and wrote the number of keypoints detected as well as total time (ms) for keypoint detection and matching in a csv file called results.csv which can be found in src folder.
+* In these two tasks, I ran all permutation-combination of detector and descriptor types. I used two ```std::vector<std::string>``` to store the detector and descriptor types as strings. I then looped over all detectors and descriptors and wrote the number of keypoints detected as well as total time (ms) for keypoint detection and matching in a csv file called [results.csv](https://github.com/SiddhantNadkarni/Keypoint-Tracking-and-Matching/blob/master/src/results.csv) which can be found in src folder.
 * However, not all detector type were compatible with the descriptor types. Thus, I had to do restrict to only a single detector at a time with the specific descriptor types it was compatible with.
-* The final results are stored in excel sheets named Task_8_and_9.xlsx.
-* The data analysis is performed in Task_8_and_9_Analysis notebook.
+* The final results are stored in excel sheets named [Task_8_and_9.xlsx](https://github.com/SiddhantNadkarni/Keypoint-Tracking-and-Matching/blob/master/Excel%20Sheets/Task_8_and_9.xlsx).
+* The data analysis is performed in [Task_8_and_9_Analysis](https://github.com/SiddhantNadkarni/Keypoint-Tracking-and-Matching/blob/master/Excel%20Sheets/iPython%20Notebooks/Task_8_and_9_Analysis.ipynb) notebook.
 
 Performance analysis - Data Description:
 
